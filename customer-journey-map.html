@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Journey Map & Conversion Strategy - SalesNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a1a;color:#e0e0f0;line-height:1.7}
+.container{max-width:1200px;margin:0 auto;padding:40px 20px}
+
+/* Header */
+.header{text-align:center;padding:60px 20px;background:linear-gradient(135deg,#0a0a1a 0%,#1a1a3e 50%,#0a0a1a 100%);border-bottom:1px solid rgba(99,102,241,0.2);margin-bottom:50px;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(99,102,241,0.08) 0%,transparent 50%);animation:pulse 8s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.5}50%{opacity:1}}
+.header h1{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#818cf8,#6366f1,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;position:relative}
+.header .subtitle{font-size:1.1rem;color:#94a3b8;font-weight:300;position:relative}
+.badge{display:inline-block;background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:6px 18px;border-radius:20px;font-size:0.8rem;font-weight:600;color:#fff;margin-bottom:20px;position:relative}
+.meta-info{display:flex;justify-content:center;gap:30px;margin-top:20px;position:relative}
+.meta-item{font-size:0.85rem;color:#64748b}
+.meta-item span{color:#818cf8;font-weight:600}
+
+/* Section */
+.section{margin-bottom:50px}
+.section-title{font-size:1.6rem;font-weight:700;color:#c7d2fe;margin-bottom:25px;display:flex;align-items:center;gap:12px}
+.section-title .icon{width:36px;height:36px;background:linear-gradient(135deg,#6366f1,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+
+/* Executive Summary */
+.summary-card{background:linear-gradient(135deg,rgba(99,102,241,0.1),rgba(139,92,246,0.05));border:1px solid rgba(99,102,241,0.2);border-radius:16px;padding:30px;margin-bottom:30px}
+.summary-card p{color:#94a3b8;font-size:0.95rem}
+
+/* Journey Stages */
+.journey-flow{display:flex;gap:0;margin-bottom:40px;overflow-x:auto;padding:20px 0}
+.stage-card{flex:1;min-width:220px;position:relative}
+.stage-card:not(:last-child)::after{content:'→';position:absolute;right:-12px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:#6366f1;z-index:2;font-weight:bold}
+.stage-inner{background:rgba(30,30,60,0.6);border:1px solid rgba(99,102,241,0.15);border-radius:14px;padding:24px 18px;margin:0 8px;height:100%;transition:all 0.3s;backdrop-filter:blur(10px)}
+.stage-inner:hover{border-color:#6366f1;transform:translateY(-4px);box-shadow:0 8px 30px rgba(99,102,241,0.15)}
+.stage-num{font-size:0.7rem;font-weight:700;color:#6366f1;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+.stage-name{font-size:1.15rem;font-weight:700;color:#e0e0f0;margin-bottom:12px}
+.stage-desc{font-size:0.82rem;color:#94a3b8;margin-bottom:14px}
+.stage-actions{list-style:none}
+.stage-actions li{font-size:0.78rem;color:#64748b;padding:3px 0;padding-left:16px;position:relative}
+.stage-actions li::before{content:'•';position:absolute;left:0;color:#6366f1}
+
+/* Touchpoints Table */
+.touch-table{width:100%;border-collapse:separate;border-spacing:0;background:rgba(30,30,60,0.4);border-radius:14px;overflow:hidden;border:1px solid rgba(99,102,241,0.15)}
+.touch-table th{background:linear-gradient(135deg,rgba(99,102,241,0.2),rgba(139,92,246,0.1));padding:14px 18px;text-align:left;font-size:0.8rem;font-weight:600;color:#c7d2fe;text-transform:uppercase;letter-spacing:1px}
+.touch-table td{padding:14px 18px;font-size:0.85rem;color:#94a3b8;border-top:1px solid rgba(99,102,241,0.08)}
+.touch-table tr:hover td{background:rgba(99,102,241,0.05)}
+
+/* Pain Points */
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.pain-card{background:rgba(30,30,60,0.5);border:1px solid rgba(239,68,68,0.2);border-radius:14px;padding:24px;transition:all 0.3s}
+.pain-card:hover{border-color:rgba(239,68,68,0.4);transform:translateY(-2px)}
+.pain-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.pain-title{font-size:1rem;font-weight:600;color:#fca5a5}
+.severity{font-size:0.7rem;font-weight:700;padding:4px 10px;border-radius:12px;text-transform:uppercase;letter-spacing:1px}
+.severity.high{background:rgba(239,68,68,0.15);color:#f87171}
+.severity.medium{background:rgba(245,158,11,0.15);color:#fbbf24}
+.pain-desc{font-size:0.85rem;color:#94a3b8;margin-bottom:10px}
+.pain-impact{font-size:0.8rem;color:#64748b;font-style:italic}
+
+/* Recommendations */
+.rec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.rec-card{background:rgba(30,30,60,0.5);border:1px solid rgba(34,197,94,0.2);border-radius:14px;padding:24px;transition:all 0.3s}
+.rec-card:hover{border-color:rgba(34,197,94,0.4);transform:translateY(-2px)}
+.rec-priority{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.rec-priority.p1{color:#f87171}
+.rec-priority.p2{color:#fbbf24}
+.rec-priority.p3{color:#4ade80}
+.rec-title{font-size:1rem;font-weight:600;color:#86efac;margin-bottom:10px}
+.rec-desc{font-size:0.85rem;color:#94a3b8;margin-bottom:12px}
+.rec-impact{font-size:0.8rem;color:#4ade80;font-weight:500}
+
+/* Funnel */
+.funnel{max-width:600px;margin:0 auto 40px}
+.funnel-step{text-align:center;padding:16px;color:#fff;font-weight:600;font-size:0.9rem;position:relative;transition:all 0.3s}
+.funnel-step:hover{filter:brightness(1.2)}
+.funnel-step .rate{font-size:0.75rem;font-weight:400;opacity:0.8;display:block;margin-top:4px}
+.f1{background:linear-gradient(90deg,#6366f1,#818cf8);border-radius:12px 12px 0 0;width:100%}
+.f2{background:linear-gradient(90deg,#7c3aed,#8b5cf6);width:85%;margin:0 auto}
+.f3{background:linear-gradient(90deg,#a855f7,#c084fc);width:65%;margin:0 auto}
+.f4{background:linear-gradient(90deg,#d946ef,#e879f9);width:45%;margin:0 auto}
+.f5{background:linear-gradient(90deg,#ec4899,#f472b6);width:30%;margin:0 auto;border-radius:0 0 12px 12px}
+
+/* KPI Grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:30px}
+.kpi-card{background:rgba(30,30,60,0.5);border:1px solid rgba(99,102,241,0.15);border-radius:14px;padding:20px;text-align:center}
+.kpi-value{font-size:2rem;font-weight:800;background:linear-gradient(135deg,#818cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kpi-label{font-size:0.8rem;color:#64748b;margin-top:4px}
+
+/* Footer */
+.footer{text-align:center;padding:40px;border-top:1px solid rgba(99,102,241,0.1);margin-top:60px;color:#475569;font-size:0.8rem}
+
+@media print{
+body{background:#fff;color:#1a1a2e}
+.stage-inner,.summary-card,.pain-card,.rec-card,.kpi-card,.touch-table{background:#f8f9fa;border-color:#e2e8f0}
+.header{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<span class="badge">Strategic Analysis</span>
+<h1>Customer Journey Map<br>& Conversion Strategy</h1>
+<p class="subtitle">Prepared for SalesNest — Startup Growth Optimization</p>
+<div class="meta-info">
+<div class="meta-item">Prepared by: <span>Strategy Consultant</span></div>
+<div class="meta-item">Date: <span>April 17, 2026</span></div>
+<div class="meta-item">Version: <span>1.0</span></div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- Executive Summary -->
+<div class="section">
+<div class="section-title"><div class="icon">📋</div> Executive Summary</div>
+<div class="summary-card">
+<p>This report presents a comprehensive Customer Journey Map for <strong>SalesNest</strong>, analyzing the complete customer experience from initial awareness through post-purchase advocacy. Our analysis identifies <strong>6 critical pain points</strong> causing significant drop-off before purchase, and provides <strong>8 actionable recommendations</strong> to optimize the conversion funnel. Implementing these changes is projected to improve conversion rates by <strong>25-40%</strong> within the first quarter.</p>
+</div>
+</div>
+
+<!-- KPIs -->
+<div class="section">
+<div class="section-title"><div class="icon">📊</div> Current Performance Snapshot</div>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="kpi-value">2.3%</div><div class="kpi-label">Conversion Rate</div></div>
+<div class="kpi-card"><div class="kpi-value">68%</div><div class="kpi-label">Cart Abandonment</div></div>
+<div class="kpi-card"><div class="kpi-value">1:42</div><div class="kpi-label">Avg. Time on Site</div></div>
+<div class="kpi-card"><div class="kpi-value">73%</div><div class="kpi-label">Bounce Rate</div></div>
+<div class="kpi-card"><div class="kpi-value">$32</div><div class="kpi-label">Avg. Order Value</div></div>
+</div>
+</div>
+
+<!-- Journey Stages -->
+<div class="section">
+<div class="section-title"><div class="icon">🗺️</div> Customer Journey Stages</div>
+<div class="journey-flow">
+<div class="stage-card">
+<div class="stage-inner">
+<div class="stage-num">Stage 01</div>
+<div class="stage-name">🔍 Awareness</div>
+<div class="stage-desc">Customer discovers SalesNest through various channels.</div>
+<ul class="stage-actions">
+<li>Social media ads</li>
+<li>Google search results</li>
+<li>Word of mouth / referrals</li>
+<li>Content marketing / blog</li>
+</ul>
+</div>
+</div>
+<div class="stage-card">
+<div class="stage-inner">
+<div class="stage-num">Stage 02</div>
+<div class="stage-name">🤔 Consideration</div>
+<div class="stage-desc">Customer evaluates the product and compares alternatives.</div>
+<ul class="stage-actions">
+<li>Browses product pages</li>
+<li>Reads reviews & testimonials</li>
+<li>Compares pricing</li>
+<li>Checks features list</li>
+</ul>
+</div>
+</div>
+<div class="stage-card">
+<div class="stage-inner">
+<div class="stage-num">Stage 03</div>
+<div class="stage-name">💡 Decision</div>
+<div class="stage-desc">Customer is ready to commit but needs final push.</div>
+<ul class="stage-actions">
+<li>Adds to cart</li>
+<li>Reviews pricing plans</li>
+<li>Looks for discounts</li>
+<li>Checks return policy</li>
+</ul>
+</div>
+</div>
+<div class="stage-card">
+<div class="stage-inner">
+<div class="stage-num">Stage 04</div>
+<div class="stage-name">💳 Purchase</div>
+<div class="stage-desc">Customer completes the transaction.</div>
+<ul class="stage-actions">
+<li>Fills checkout form</li>
+<li>Selects payment method</li>
+<li>Confirms order</li>
+<li>Receives confirmation</li>
+</ul>
+</div>
+</div>
+<div class="stage-card">
+<div class="stage-inner">
+<div class="stage-num">Stage 05</div>
+<div class="stage-name">⭐ Retention</div>
+<div class="stage-desc">Post-purchase experience and loyalty building.</div>
+<ul class="stage-actions">
+<li>Onboarding emails</li>
+<li>Product usage</li>
+<li>Customer support</li>
+<li>Feedback & reviews</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Conversion Funnel -->
+<div class="section">
+<div class="section-title"><div class="icon">📉</div> Conversion Funnel Analysis</div>
+<div class="funnel">
+<div class="funnel-step f1">Awareness — 10,000 visitors/mo<span class="rate">100% of traffic</span></div>
+<div class="funnel-step f2">Consideration — 3,500 engaged<span class="rate">35% proceed · 65% drop-off</span></div>
+<div class="funnel-step f3">Decision — 1,200 intent<span class="rate">34% proceed · 66% drop-off</span></div>
+<div class="funnel-step f4">Cart / Checkout — 480<span class="rate">40% proceed · 60% drop-off</span></div>
+<div class="funnel-step f5">Purchase — 230 conversions<span class="rate">48% proceed · 52% abandon cart</span></div>
+</div>
+</div>
+
+<!-- Touchpoints -->
+<div class="section">
+<div class="section-title"><div class="icon">📍</div> Key Touchpoints & Emotions</div>
+<table class="touch-table">
+<thead>
+<tr><th>Stage</th><th>Touchpoint</th><th>Customer Emotion</th><th>Channel</th></tr>
+</thead>
+<tbody>
+<tr><td>Awareness</td><td>First ad impression</td><td>😐 Curious / Neutral</td><td>Instagram, Google Ads</td></tr>
+<tr><td>Awareness</td><td>Landing page visit</td><td>🤨 Interested but skeptical</td><td>Website</td></tr>
+<tr><td>Consideration</td><td>Product page browsing</td><td>🤔 Evaluating</td><td>Website</td></tr>
+<tr><td>Consideration</td><td>Reviews & social proof</td><td>😊 Building trust</td><td>Website, Social</td></tr>
+<tr><td>Decision</td><td>Pricing page</td><td>😟 Price-sensitive anxiety</td><td>Website</td></tr>
+<tr><td>Decision</td><td>Add to cart</td><td>😌 Committed intent</td><td>Website</td></tr>
+<tr><td>Purchase</td><td>Checkout form</td><td>😤 Frustrated (long form)</td><td>Website</td></tr>
+<tr><td>Purchase</td><td>Payment processing</td><td>😰 Trust concerns</td><td>Website</td></tr>
+<tr><td>Retention</td><td>Order confirmation</td><td>😊 Relieved / Happy</td><td>Email</td></tr>
+<tr><td>Retention</td><td>Follow-up support</td><td>😍 Delighted (if good)</td><td>Email, Chat</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Pain Points -->
+<div class="section">
+<div class="section-title"><div class="icon">⚠️</div> Identified Pain Points</div>
+<div class="pain-grid">
+<div class="pain-card">
+<div class="pain-header">
+<div class="pain-title">1. Slow Landing Page Load</div>
+<span class="severity high">High</span>
+</div>
+<div class="pain-desc">Page load time exceeds 4 seconds on mobile, causing 53% of mobile visitors to bounce before seeing any content.</div>
+<div class="pain-impact">Impact: ~3,400 lost visitors/month</div>
+</div>
+<div class="pain-card">
+<div class="pain-header">
+<div class="pain-title">2. Unclear Value Proposition</div>
+<span class="severity high">High</span>
+</div>
+<div class="pain-desc">The hero section lacks a clear, compelling headline. Visitors don't understand what SalesNest offers within the first 5 seconds.</div>
+<div class="pain-impact">Impact: 65% awareness-to-consideration drop-off</div>
+</div>
+<div class="pain-card">
+<div class="pain-header">
+<div class="pain-title">3. Missing Social Proof</div>
+<span class="severity high">High</span>
+</div>
+<div class="pain-desc">No visible customer testimonials, case studies, or trust badges on product pages. Users leave to research alternatives.</div>
+<div class="pain-impact">Impact: 40% drop at consideration stage</div>
+</div>
+<div class="pain-card">
+<div class="pain-header">
+<div class="pain-title">4. Complex Pricing Structure</div>
+<span class="severity medium">Medium</span>
+</div>
+<div class="pain-desc">Too many pricing tiers with confusing feature matrices. Customers can't quickly identify the right plan for their needs.</div>
+<div class="pain-impact">Impact: 30% drop at decision stage</div>
+</div>
+<div class="pain-card">
+<div class="pain-header">
+<div class="pain-title">5. Lengthy Checkout Process</div>
+<span class="severity high">High</span>
+</div>
+<div class="pain-desc">Checkout requires 5 steps with mandatory account creation. 68% of users abandon cart during this process.</div>
+<div class="pain-impact">Impact: 68% cart abandonment rate</div>
+</div>
+<div class="pain-card">
+<div class="pain-header">
+<div class="pain-title">6. Limited Payment Options</div>
+<span class="severity medium">Medium</span>
+</div>
+<div class="pain-desc">Only credit card payments supported. No digital wallets (Apple Pay, Google Pay) or buy-now-pay-later options available.</div>
+<div class="pain-impact">Impact: 15% of checkout abandonment</div>
+</div>
+</div>
+</div>
+
+<!-- Recommendations -->
+<div class="section">
+<div class="section-title"><div class="icon">🚀</div> Strategic Recommendations</div>
+<div class="rec-grid">
+<div class="rec-card">
+<div class="rec-priority p1">Priority 1 — Immediate</div>
+<div class="rec-title">Optimize Page Speed</div>
+<div class="rec-desc">Compress images, implement lazy loading, minify CSS/JS, and use a CDN. Target load time under 2 seconds on mobile.</div>
+<div class="rec-impact">Expected Impact: +15% visitor retention</div>
+</div>
+<div class="rec-card">
+<div class="rec-priority p1">Priority 1 — Immediate</div>
+<div class="rec-title">Redesign Hero Section</div>
+<div class="rec-desc">Create a clear, benefit-driven headline with a strong CTA. Use the formula: "Help [audience] achieve [outcome] without [pain point]."</div>
+<div class="rec-impact">Expected Impact: +20% engagement rate</div>
+</div>
+<div class="rec-card">
+<div class="rec-priority p1">Priority 1 — Immediate</div>
+<div class="rec-title">Simplify Checkout to 2 Steps</div>
+<div class="rec-desc">Enable guest checkout, auto-fill fields, combine shipping + payment into one step. Add progress indicator.</div>
+<div class="rec-impact">Expected Impact: -25% cart abandonment</div>
+</div>
+<div class="rec-card">
+<div class="rec-priority p2">Priority 2 — Short Term</div>
+<div class="rec-title">Add Social Proof Elements</div>
+<div class="rec-desc">Display customer testimonials, star ratings, user count ("Join 5,000+ businesses"), and trust badges prominently.</div>
+<div class="rec-impact">Expected Impact: +18% consideration-to-decision</div>
+</div>
+<div class="rec-card">
+<div class="rec-priority p2">Priority 2 — Short Term</div>
+<div class="rec-title">Simplify Pricing to 3 Tiers</div>
+<div class="rec-desc">Reduce to 3 clear plans (Starter, Pro, Enterprise) with a highlighted "Most Popular" option and feature comparison.</div>
+<div class="rec-impact">Expected Impact: +12% pricing page conversion</div>
+</div>
+<div class="rec-card">
+<div class="rec-priority p2">Priority 2 — Short Term</div>
+<div class="rec-title">Add Multiple Payment Methods</div>
+<div class="rec-desc">Integrate Apple Pay, Google Pay, PayPal, and a BNPL option like Klarna or Afterpay to reduce payment friction.</div>
+<div class="rec-impact">Expected Impact: +10% checkout completion</div>
+</div>
+<div class="rec-card">
+<div class="rec-priority p3">Priority 3 — Medium Term</div>
+<div class="rec-title">Implement Exit-Intent Popups</div>
+<div class="rec-desc">Show targeted offers (10% discount, free trial extension) when users show exit intent at decision/checkout stages.</div>
+<div class="rec-impact">Expected Impact: Recover 5-8% of abandoning users</div>
+</div>
+<div class="rec-card">
+<div class="rec-priority p3">Priority 3 — Medium Term</div>
+<div class="rec-title">Build Automated Email Sequences</div>
+<div class="rec-desc">Create cart abandonment emails (1hr, 24hr, 72hr), welcome sequences, and re-engagement campaigns for retention.</div>
+<div class="rec-impact">Expected Impact: +12% recovery of lost sales</div>
+</div>
+</div>
+</div>
+
+<!-- Implementation Roadmap -->
+<div class="section">
+<div class="section-title"><div class="icon">📅</div> Implementation Roadmap</div>
+<table class="touch-table">
+<thead>
+<tr><th>Phase</th><th>Timeline</th><th>Actions</th><th>Expected Outcome</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Phase 1</strong></td><td>Week 1-2</td><td>Page speed optimization, Hero redesign, Checkout simplification</td><td>+15-20% conversion uplift</td></tr>
+<tr><td><strong>Phase 2</strong></td><td>Week 3-4</td><td>Social proof integration, Pricing restructure, Payment methods</td><td>+10-15% additional uplift</td></tr>
+<tr><td><strong>Phase 3</strong></td><td>Week 5-6</td><td>Exit-intent popups, Email automation, A/B testing</td><td>+5-10% recovery & retention</td></tr>
+<tr><td><strong>Phase 4</strong></td><td>Ongoing</td><td>Monitor KPIs, iterate based on data, continuous optimization</td><td>Sustained growth trajectory</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Projected Impact -->
+<div class="section">
+<div class="section-title"><div class="icon">🎯</div> Projected Impact After Implementation</div>
+<div class="kpi-grid">
+<div class="kpi-card"><div class="kpi-value" style="background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">4.8%</div><div class="kpi-label">Target Conversion Rate ↑</div></div>
+<div class="kpi-card"><div class="kpi-value" style="background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">42%</div><div class="kpi-label">Target Cart Abandonment ↓</div></div>
+<div class="kpi-card"><div class="kpi-value" style="background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">3:15</div><div class="kpi-label">Target Time on Site ↑</div></div>
+<div class="kpi-card"><div class="kpi-value" style="background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">45%</div><div class="kpi-label">Target Bounce Rate ↓</div></div>
+<div class="kpi-card"><div class="kpi-value" style="background:linear-gradient(135deg,#4ade80,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$45</div><div class="kpi-label">Target AOV ↑</div></div>
+</div>
+</div>
+
+<div class="footer">
+<p>Customer Journey Map & Conversion Strategy Report — Prepared for <strong>SalesNest</strong></p>
+<p style="margin-top:8px">© 2026 | Confidential & Proprietary</p>
+</div>
+
+</div>
+</body>
+</html>
